@@ -56,14 +56,13 @@
       type="pattern"
       url="pattern-mymarker1.patt">
 
-      <a-text
-        id="resultText"
-        value="おみくじ"
-        position="0 0.05 0"
-        rotation="-90 0 0"
-        align="center"
-        color="#B22222"
-        width="3">
+      <a-text id="resultText"
+       value="おみくじ"
+       position="0 0.3 0"
+       rotation="-90 0 0"
+       align="center"
+       color="#B22222"
+       width="4">
       </a-text>
 
     </a-marker>
@@ -105,16 +104,13 @@
 
     // ボタンを押したとき
     drawButton.addEventListener("click", function() {
-
-      const randomIndex =
-        Math.floor(Math.random() * fortunes.length);
-
+      const randomIndex = Math.floor(Math.random() * fortunes.length);
       const result = fortunes[randomIndex];
 
-      resultText.setAttribute("value", result);
-
+    resultText.setAttribute("value", result);
+    resultText.setAttribute("visible", true);
     });
-
+    
   </script>
 
 </body>
