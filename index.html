@@ -52,64 +52,63 @@
     vr-mode-ui="enabled: false">
 
     <a-marker
-      id="myMarker"
-      type="pattern"
-      url="pattern-mymarker1.patt">
+  id="myMarker"
+  type="pattern"
+  url="pattern-marker1.patt">
 
-      <a-text id="resultText"
-       value="おみくじ"
-       position="0 0.3 0"
-       rotation="-90 0 0"
-       align="center"
-       color="#B22222"
-       width="4">
-      </a-text>
+  <a-entity
+    position="0 0.5 0"
+    rotation="-90 0 0">
 
-    </a-marker>
+    <a-text
+      id="resultText"
+      value="おみくじ"
+      position="0 0 0"
+      align="center"
+      color="#FF0000"
+      width="4">
+    </a-text>
 
-    <a-entity camera></a-entity>
+  </a-entity>
 
+</a-marker>
+    
   </a-scene>
 
   <script>
 
-    // おみくじの結果
     const fortunes = [
-      "大吉！",
-      "中吉！",
-      "小吉！",
-      "吉！"
-    ];
+  "大吉！",
+  "中吉！",
+  "小吉！",
+  "吉！"
+];
 
-    const resultText =
-      document.querySelector("#resultText");
+const resultText = document.querySelector("#resultText");
+const drawButton = document.querySelector("#drawButton");
+const marker = document.querySelector("#myMarker");
 
-    const drawButton =
-      document.querySelector("#drawButton");
+// マーカーを認識したとき
+marker.addEventListener("markerFound", function() {
+  drawButton.disabled = false;
+  drawButton.textContent = "おみくじを引く";
+});
 
-    const marker =
-      document.querySelector("#myMarker");
+// マーカーを見失ったとき
+marker.addEventListener("markerLost", function() {
+  drawButton.disabled = true;
+  drawButton.textContent = "マーカーを映してください";
+});
 
-    // マーカーを認識したとき
-    marker.addEventListener("markerFound", function() {
-      drawButton.disabled = false;
-      drawButton.textContent = "おみくじを引く";
-    });
+// ボタンを押したとき
+drawButton.addEventListener("click", function() {
+  const randomIndex = Math.floor(Math.random() * fortunes.length);
+  const result = fortunes[randomIndex];
 
-    // マーカーを見失ったとき
-    marker.addEventListener("markerLost", function() {
-      drawButton.disabled = true;
-      drawButton.textContent = "マーカーを映してください";
-    });
+  resultText.setAttribute("value", result);
 
-    // ボタンを押したとき
-    drawButton.addEventListener("click", function() {
-      const randomIndex = Math.floor(Math.random() * fortunes.length);
-      const result = fortunes[randomIndex];
-
-    resultText.setAttribute("value", result);
-    resultText.setAttribute("visible", true);
-    });
+  console.log("結果:", result);
+});
     
   </script>
 
