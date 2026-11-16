@@ -47,37 +47,45 @@
     マーカーを映してください
   </button>
 
-  <a-scene embedded
-    arjs="sourceType: webcam; debugUIEnabled: false;"
-    vr-mode-ui="enabled: false">
+  <a-scene
+  embedded
+  arjs="sourceType: webcam; debugUIEnabled: false;"
+  vr-mode-ui="enabled: false">
 
-    <a-marker
-  id="myMarker"
-  type="pattern"
-  url="pattern-mymarker1.patt">
+  <a-marker
+    id="myMarker"
+    type="pattern"
+    url="pattern-mymarker1.patt">
 
-  <a-entity
-    position="0 0.5 0"
-    rotation="-90 0 0">
+    <!-- 文字の背景 -->
+    <a-plane
+      position="0 0.5 0"
+      rotation="-90 0 0"
+      width="2"
+      height="1"
+      color="#FFFFFF">
+    </a-plane>
 
+    <!-- おみくじの文字 -->
     <a-text
       id="resultText"
       value="おみくじ"
-      position="0 0 0"
+      position="0 0.5 0.01"
+      rotation="-90 0 0"
       align="center"
       color="#FF0000"
-      width="4">
+      width="5">
     </a-text>
 
-  </a-entity>
+  </a-marker>
 
-</a-marker>
-    
-  </a-scene>
+  <!-- カメラ -->
+  <a-entity camera></a-entity>
 
+</a-scene>
+  
   <script>
-
-    const fortunes = [
+const fortunes = [
   "大吉！",
   "中吉！",
   "小吉！",
@@ -88,28 +96,21 @@ const resultText = document.querySelector("#resultText");
 const drawButton = document.querySelector("#drawButton");
 const marker = document.querySelector("#myMarker");
 
-// マーカーを認識したとき
 marker.addEventListener("markerFound", function() {
   drawButton.disabled = false;
   drawButton.textContent = "おみくじを引く";
 });
 
-// マーカーを見失ったとき
 marker.addEventListener("markerLost", function() {
   drawButton.disabled = true;
   drawButton.textContent = "マーカーを映してください";
 });
 
-// ボタンを押したとき
 drawButton.addEventListener("click", function() {
   const randomIndex = Math.floor(Math.random() * fortunes.length);
-  const result = fortunes[randomIndex];
 
-  resultText.setAttribute("value", result);
-
-  console.log("結果:", result);
+  resultText.setAttribute("value", fortunes[randomIndex]);
 });
-    
   </script>
 
 </body>
